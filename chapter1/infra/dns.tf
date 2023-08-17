@@ -12,17 +12,6 @@ data "aws_route53_zone" "domain" {
 
 # Generate Certificate for the particular domain
 
-# module "acm" {
-#   source = "./modules/acm"
-
-#   zone_id     = data.aws_route53_zone.domain.zone_id
-#   domain      = local.url
-#   environment = var.environment
-
-#   depends_on = [module.alb_ingress]
-
-# }
-
 module "acm" {
 
   source  = "terraform-aws-modules/acm/aws"
