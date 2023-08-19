@@ -133,11 +133,11 @@ resource "kubernetes_ingress_v1" "app" {
     name      = var.org_name
     namespace = kubernetes_namespace_v1.app.metadata.0.name
     annotations = {
-      "kubernetes.io/ingress.class"                    = "alb"
-      "alb.ingress.kubernetes.io/scheme"               = "internet-facing"
-      "alb.ingress.kubernetes.io/target-type"          = "ip"
-      "alb.ingress.kubernetes.io/certificate-arn"      = module.acm.acm_certificate_arn
-      "alb.ingress.kubernetes.io/listen-ports"         = "[{\"HTTP\": 80}, {\"HTTPS\":443}]"
+      "kubernetes.io/ingress.class"               = "alb"
+      "alb.ingress.kubernetes.io/scheme"          = "internet-facing"
+      "alb.ingress.kubernetes.io/target-type"     = "ip"
+      "alb.ingress.kubernetes.io/certificate-arn" = module.acm.acm_certificate_arn
+      "alb.ingress.kubernetes.io/listen-ports"    = "[{\"HTTP\": 80}, {\"HTTPS\":443}]"
     }
   }
   spec {

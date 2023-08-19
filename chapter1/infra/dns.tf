@@ -1,5 +1,5 @@
 locals {
-    
+
   url = "dev.${var.domain}"
 
 }
@@ -17,13 +17,13 @@ module "acm" {
   source  = "terraform-aws-modules/acm/aws"
   version = "~> 4.0"
 
-  domain_name  = local.url
-  zone_id      = data.aws_route53_zone.domain.zone_id
+  domain_name = local.url
+  zone_id     = data.aws_route53_zone.domain.zone_id
 
   wait_for_validation = true
 
   tags = {
-    Name =  local.url
+    Name = local.url
   }
 }
 
