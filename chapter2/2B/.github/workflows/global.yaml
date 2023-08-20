@@ -30,10 +30,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Uncomment Terraform Cloud Backend Configuration file
-        id: uncomment
-        run: sed -i 's/^#*//' backend.tf
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -88,6 +84,6 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply --auto-approve
 
-      - name: Terraform Show
+      - name: Terraform Output
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform show
+        run: terraform output

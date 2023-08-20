@@ -15,3 +15,9 @@ variable "org_name" {
   type        = string
   default     = "s4cp"
 }
+
+variable "domain" {
+  description = "Primary Domain name that has been pre-configured"
+  type        = string
+
+}

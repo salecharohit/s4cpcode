@@ -1,4 +1,3 @@
-// File to be uncommented only in GHA
-# terraform {
-#   backend "s3" {}
-# }
+terraform {
+  backend "s3" {}
+}

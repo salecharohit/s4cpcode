@@ -23,65 +23,23 @@ terraform {
   required_version = ">= 1.1.0"
 }
 
-resource "random_id" "bucket_id" {
-  byte_length = 5
+module tf_state_admin {
+  source = "../modules/tf_state"
+
+  account = "admin"
 }
 
-resource "random_id" "table_id" {
-  byte_length = 5
+output "s3_bucket_arn" {
+  value       = module.tf_state_admin.s3_bucket_arn
+  description = "The ARN of the S3 bucket"
 }
 
-resource "aws_s3_bucket" "terraform_state_bucket" {
-  bucket = "s4cp-terraform-state-${random_id.bucket_id.hex}"
-  tags = {
-    Name              = "Terraform State Bucket"
-    terraform-managed = "true"
-  }
+output "s3_bucket_name" {
+  value       = module.tf_state_admin.s3_bucket_name
+  description = "The Name of the S3 bucket"
 }
 
-resource "aws_s3_bucket_ownership_controls" "terraform_state_bucket" {
-  bucket = aws_s3_bucket.terraform_state_bucket.id
-  rule {
-    object_ownership = "BucketOwnerPreferred"
-  }
-}
-
-resource "aws_s3_bucket_acl" "terraform_state_bucket" {
-  bucket     = aws_s3_bucket.terraform_state_bucket.id
-  acl        = "private"
-  depends_on = [aws_s3_bucket_ownership_controls.terraform_state_bucket]
-}
-
-resource "aws_s3_bucket_versioning" "terraform_state_bucket" {
-  bucket = aws_s3_bucket.terraform_state_bucket.id
-  versioning_configuration {
-    status = "Enabled"
-  }
-}
-
-resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state_bucket" {
-  bucket = aws_s3_bucket.terraform_state_bucket.id
-
-  rule {
-    apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256"
-    }
-  }
-}
-
-resource "aws_dynamodb_table" "terraform_state_lock" {
-  name         = "s4cp_terraform_locks_${random_id.table_id.hex}"
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "LockID"
-
-  attribute {
-    name = "LockID"
-    type = "S"
-  }
-
-  tags = {
-    Name              = "Terraform State Lock Table"
-    terraform-managed = "true"
-
-  }
+output "dynamodb_table_name" {
+  value       = module.tf_state_admin.dynamodb_table_name
+  description = "The name of the DynamoDB table"
 }

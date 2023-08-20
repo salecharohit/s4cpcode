@@ -23,7 +23,7 @@ resource "aws_organizations_organizational_unit" "dev" {
 # Org for creating users only. This will be a bastion account where users will log in
 # and assume role into other accounts.
 module "identity_account" {
-  source = "./modules/awsaccounts"
+  source = "../modules/awsaccounts"
 
   name      = var.accounts["identity"].name
   email     = var.accounts["identity"].email
@@ -33,7 +33,7 @@ module "identity_account" {
 
 # Org hosting Production infrastructure
 module "prod_account" {
-  source = "./modules/awsaccounts"
+  source = "../modules/awsaccounts"
 
   name      = var.accounts["prod"].name
   email     = var.accounts["prod"].email
@@ -43,7 +43,7 @@ module "prod_account" {
 
 # Org hosting Development infrastructure
 module "dev_account" {
-  source = "./modules/awsaccounts"
+  source = "../modules/awsaccounts"
 
   name      = var.accounts["dev"].name
   email     = var.accounts["dev"].email
