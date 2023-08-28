@@ -23,7 +23,7 @@ terraform {
   required_version = ">= 1.1.0"
 }
 
-module tf_state_admin {
+module "tf_state_admin" {
   source = "../modules/tf_state"
 
   account = "admin"

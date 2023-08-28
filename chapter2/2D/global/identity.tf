@@ -70,6 +70,6 @@ module "terraform_sa_aws_keys" {
     aws = aws.identity
   }
 
-  depends_on = [ module.terraform_sa ]
+  depends_on = [module.terraform_sa]
 
 }

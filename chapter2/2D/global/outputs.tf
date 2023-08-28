@@ -9,15 +9,15 @@ output "account_ids" {
 
 output "tf_state_prod" {
   value = {
-    bucket     = module.prod.s3_bucket_name
-    dynamodb   = module.prod.dynamodb_table_name
+    bucket   = module.prod.s3_bucket_name
+    dynamodb = module.prod.dynamodb_table_name
   }
 }
 
 output "tf_state_dev" {
   value = {
-    bucket     = module.dev.s3_bucket_name
-    dynamodb   = module.dev.dynamodb_table_name
+    bucket   = module.dev.s3_bucket_name
+    dynamodb = module.dev.dynamodb_table_name
   }
 }
 
