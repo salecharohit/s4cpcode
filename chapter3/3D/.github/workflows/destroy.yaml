@@ -1,0 +1,38 @@
+name: s4cp.infra.destroy
+
+on:
+  workflow_dispatch:
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.TERRAFORM_AWS_SECRET_ACCESS_KEY }}
+  ENVIRONMENT: "prod"
+
+jobs:
+  terraform:
+    name: "Terraform"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "infra"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.1.0
+
+      - name: Terraform Init
+        id: init
+        run: terraform init -backend-config=${{env.ENVIRONMENT}}.hcl
+      
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+            
+      - name: Terraform Destory
+        run: terraform destroy --auto-approve -var-file=${{env.ENVIRONMENT}}.tfvars
