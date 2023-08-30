@@ -22,14 +22,22 @@ jobs:
   semgrep:
     name: Semgrep Scan
     runs-on: ubuntu-latest
-    container:
-      image: returntocorp/semgrep
-
+    defaults:
+      run:
+        working-directory: "app"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+        
+      - name: Install Semgrep
+        run: python3 -m pip install semgrep
 
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2

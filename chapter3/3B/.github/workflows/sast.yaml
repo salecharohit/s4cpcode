@@ -19,12 +19,18 @@ jobs:
   semgrep:
     name: Semgrep Scan
     runs-on: ubuntu-latest
-    container:
-      image: returntocorp/semgrep
 
     steps:
       - name: Clone Application
         uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+        
+      - name: Install Semgrep
+        run: python3 -m pip install semgrep        
 
       - name: Run Semgrep and Process stdout
         uses: mathiasvr/command-output@v2.0.0
