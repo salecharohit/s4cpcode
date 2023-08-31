@@ -22,9 +22,6 @@ jobs:
   semgrep:
     name: Semgrep Scan
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: "app"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
