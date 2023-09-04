@@ -6,8 +6,8 @@
 // }
 locals {
 
-  prod_url    = var.environment == "prod" ? "prod.${var.domain}" : ""
-  dev_url     = var.environment == "dev" ? "dev.${var.domain}" : ""
+  prod_url = var.environment == "prod" ? "prod.${var.domain}" : ""
+  dev_url  = var.environment == "dev" ? "dev.${var.domain}" : ""
 
   url = coalesce(local.prod_url, local.dev_url)
 

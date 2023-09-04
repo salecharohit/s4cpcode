@@ -33,7 +33,7 @@ module "assume_admin_role_without_mfa" {
 }
 
 # Create Infrastructure to Store Terraform State
-module tf_state {
+module "tf_state" {
   source = "../../modules/tf_state"
 
   account = var.account

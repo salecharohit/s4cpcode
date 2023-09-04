@@ -9,15 +9,15 @@ output "account_ids" {
 
 output "tf_state_prod" {
   value = {
-    bucket     = module.prod.s3_bucket_name
-    dynamodb   = module.prod.dynamodb_table_name
+    bucket   = module.prod.s3_bucket_name
+    dynamodb = module.prod.dynamodb_table_name
   }
 }
 
 output "tf_state_dev" {
   value = {
-    bucket     = module.dev.s3_bucket_name
-    dynamodb   = module.dev.dynamodb_table_name
+    bucket   = module.dev.s3_bucket_name
+    dynamodb = module.dev.dynamodb_table_name
   }
 }
 
@@ -50,6 +50,6 @@ output "terraform_sa_aws_keys" {
     prod_admin_role       = module.prod.assume_admin_role_without_mfa_name
     dev_admin_role        = module.dev.assume_admin_role_without_mfa_name
     prod_github_role      = module.prod.assume_ecr_role_without_mfa_name
-    dev_github_role       = module.dev.assume_ecr_role_without_mfa_name    
+    dev_github_role       = module.dev.assume_ecr_role_without_mfa_name
   }
 }
