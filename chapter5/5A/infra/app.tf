@@ -49,7 +49,7 @@ resource "kubernetes_deployment_v1" "app" {
 
       spec {
         container {
-          image = "salecharohit/practicalgitops"
+          image = var.app_docker_img
           name  = var.org_name
           env {
             name  = "DB_PORT"

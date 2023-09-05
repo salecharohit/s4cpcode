@@ -11,15 +11,15 @@ variable "region" {
   type        = string
 }
 
-variable "domain" {
-  description = "The FQDN domain"
-  type        = string
-}
-
 variable "org_name" {
   description = "Name of Organisation"
   type        = string
   default     = "s4cp"
+}
+
+variable "assume_role_account_id" {
+  description = "ID Of the Account which needs to be assumed to run terraform"
+  type        = string
 }
 
 variable "db_name" {
@@ -34,7 +34,14 @@ variable "db_user_name" {
   default     = "s4cp"
 }
 
-variable "assume_role_account_id" {
-  description = "ID Of the Account which needs to be assumed to run terraform"
+variable "domain" {
+  description = "The FQDN domain"
   type        = string
 }
+
+variable "app_docker_img" {
+  description = "Docker Image that needs to be executed"
+  type        = string
+  default     = "salecharohit/practicalgitops"
+}
+

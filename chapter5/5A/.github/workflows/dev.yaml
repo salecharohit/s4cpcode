@@ -1,15 +1,15 @@
-name: s4cp.infra.prod
+name: s4cp.infra.dev
 
 on:
   push:
     branches:
-        - main
+        - dev
     paths:
       - "infra/**"
       - "!**/README.md"
   pull_request:
     branches:
-        - main
+        - dev
     paths:
       - "infra/**"
       - "!**/README.md"
@@ -53,15 +53,9 @@ jobs:
         with:
           terraform_version: 1.1.0
 
-      - name: Setup OPA
-        if: github.event_name == 'pull_request'
-        uses: open-policy-agent/setup-opa@v2
-        with:
-          version: 0.54.0
-
       - name: Terraform Init
         id: init
-        run: terraform init -backend-config=prod.hcl
+        run: terraform init -backend-config=dev.hcl
       
       - name: Terraform Validate
         id: validate
@@ -70,16 +64,7 @@ jobs:
       - name: Terraform Plan
         id: plan
         if: github.event_name == 'pull_request'
-        run: terraform plan -no-color -var-file=prod.tfvars --out tfplan.bin
-        continue-on-error: true
-
-      - name: Terraform Plan Export
-        id: export
-        if: github.event_name == 'pull_request'
-        run: |
-          terraform show -json tfplan.bin > temp.json
-          # Trimming it because of terraform wrapper scripts
-          tail -n +2 temp.json > ${{ github.workspace }}/tfplan.json
+        run: terraform plan -no-color -var-file=dev.tfvars
         continue-on-error: true
 
       - name: Terraform Plan Output
@@ -90,7 +75,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const output = `## Terraform prod Account Plan
+            const output = `## Terraform infra Account Plan
             
             #### Terraform Initialization \`${{ steps.init.outcome }}\`
             #### Terraform Validation \`${{ steps.validate.outcome }}\`
@@ -108,48 +93,15 @@ jobs:
               repo: context.repo.repo,
               body: output
             })
-
-      - name: Run OPA Tests
-        uses: mathiasvr/command-output@v2.0.0
-        id: opa
-        if: github.event_name == 'pull_request'
-        continue-on-error: true
-        with:
-          run: opa eval --input ${{ github.workspace }}/tfplan.json --data scripts/opa/policies.rego -f pretty 'data.aws'
-
-      - name: OPA Scan Output
-        uses: actions/github-script@v6
-        if: github.event_name == 'pull_request'
-        env:
-          OPACHECK: ${{ steps.opa.outputs.stdout }}
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const output = `## OPA Scan Output
             
-            #### OPA Scan \`${{ steps.OPACHECK.outcome }}\`
-
-            <details><summary>Show OPA Scan Output</summary>
-            ${process.env.OPACHECK}
-            </details>
-
-            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
-
-            github.rest.issues.createComment ({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            })
-
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply --auto-approve -var-file=prod.tfvars
+        if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+        run: terraform apply --auto-approve -var-file=dev.tfvars
 
       - name: Terraform Output
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
         run: terraform output

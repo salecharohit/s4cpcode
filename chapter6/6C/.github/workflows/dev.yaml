@@ -40,6 +40,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_NOTIFY_USER_LIST: ${{ env.GIT_ACTOR }}
 
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install AWS CLI
+        run: python3 -m pip install awscli
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
