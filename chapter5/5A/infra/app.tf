@@ -161,5 +161,6 @@ resource "kubernetes_ingress_v1" "app" {
   depends_on = [module.alb_ingress, time_sleep.wait_90_seconds]
 }
 
-
-
+output "hostname" {
+  value = kubernetes_ingress_v1.app.status.0.load_balancer.0.ingress.0.hostname
+}
