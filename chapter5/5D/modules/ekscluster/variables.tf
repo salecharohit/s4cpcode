@@ -36,3 +36,8 @@ variable "aws_auth_roles" {
     groups   = list(string)
   }))
 }
+
+variable "kms_key_arn" {
+  description = "KMS Key ARN"
+  type        = string
+}

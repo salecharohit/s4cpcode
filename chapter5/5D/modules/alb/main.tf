@@ -1,7 +1,7 @@
 # Create an IAM Policy for to restrict permissions needed for the Load Balancer Controller for operations
 resource "aws_iam_policy" "alb_iam_policy" {
   name = "AWSLoadBalancerControllerIAMPolicy1"
-  policy = templatefile("./modules/alb/iam_policy.json", {
+  policy = templatefile("../modules/alb/iam_policy.json", {
     kms_key_arn = var.kms_key_arn
   })
   tags = {

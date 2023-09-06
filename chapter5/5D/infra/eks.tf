@@ -14,7 +14,7 @@ variable "instance_types" {
 
 # Module to create KMS Keys
 module "eks_kms" {
-  source = "./modules/awskms"
+  source = "../modules/awskms"
 
   environment             = var.environment
   description             = "KMS Key to encrypt secrets in the Cluster"
