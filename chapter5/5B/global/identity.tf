@@ -20,14 +20,14 @@ locals {
     developer = [
       module.prod.assume_dev_role_arn,
       module.dev.assume_admin_role_with_mfa_arn,
-      module.prod.assume_k8s_developer_role_without_mfa_arn,
-      module.dev.assume_k8s_admin_role_without_mfa_arn      
+      module.prod.assume_k8s_developer_role_with_mfa_arn,
+      module.dev.assume_k8s_admin_role_with_mfa_arn      
     ],
     admin = [
       module.prod.assume_admin_role_with_mfa_arn,
       module.dev.assume_admin_role_with_mfa_arn,
-      module.prod.assume_k8s_admin_role_without_mfa_arn,
-      module.dev.assume_k8s_admin_role_without_mfa_arn         
+      module.prod.assume_k8s_admin_role_with_mfa_arn,
+      module.dev.assume_k8s_admin_role_with_mfa_arn         
     ]
   }
 }

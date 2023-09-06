@@ -40,6 +40,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_NOTIFY_USER_LIST: ${{ env.GIT_ACTOR }}
 
+# This is needed as GHA Runners are not equipped to handle eks commands of AWS
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
