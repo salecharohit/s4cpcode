@@ -51,14 +51,6 @@ resource "helm_release" "aws_csi_secrets" {
 
 ################# Create Service Accounts ###########################
 
-# resource "aws_iam_policy" "secrets_policy" {
-#   name = "secrets_policy"
-#   path = "/"
-#   policy = templatefile("./data/secrets.json", {
-#     db_password_arn = module.awssm-db-password.arn
-#   })
-# }
-
 data "aws_iam_policy_document" "secrets_policy" {
   statement {
     sid    = "SecretsManagerReadOnly"
@@ -75,9 +67,14 @@ data "aws_iam_policy_document" "secrets_policy" {
   }
 }
 
+resource "aws_iam_policy" "secrets_policy" {
+  name = "secrets_policy"
+  path = "/"
+  policy = data.aws_iam_policy_document.secrets_policy.json
+}
 
 module "irsa_aws_secrets" {
-  source = "../../modules/irsa"
+  source = "../modules/irsa"
 
   oidc_url         = module.eks.cluster_oidc_issuer_url
   oidc_arn         = module.eks.oidc_provider_arn
@@ -258,15 +255,16 @@ resource "kubernetes_ingress_v1" "app" {
     name      = var.org_name
     namespace = kubernetes_namespace_v1.app.metadata.0.name
     annotations = {
-      "kubernetes.io/ingress.class"            = "alb"
-      "alb.ingress.kubernetes.io/scheme"       = "internet-facing"
-      "alb.ingress.kubernetes.io/target-type"  = "ip"
-      "alb.ingress.kubernetes.io/listen-ports" = "[{\"HTTP\": 80}]"
+      "kubernetes.io/ingress.class"               = "alb"
+      "alb.ingress.kubernetes.io/scheme"          = "internet-facing"
+      "alb.ingress.kubernetes.io/target-type"     = "ip"
+      "alb.ingress.kubernetes.io/certificate-arn" = module.acm.acm_certificate_arn
+      "alb.ingress.kubernetes.io/listen-ports"    = "[{\"HTTP\": 80}, {\"HTTPS\":443}]"
     }
   }
   spec {
     rule {
-      host = ""
+      host = local.url
       http {
         path {
           backend {

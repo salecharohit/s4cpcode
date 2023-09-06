@@ -85,7 +85,7 @@ module "pgsql" {
 
 # Write the DB random password in AWS Secrets Manager
 module "awssm-db-password" {
-  source = "./modules/awssm"
+  source = "../modules/awssm"
 
   parameter_name          = var.db_pwd_parameter_name
   secret_value            = module.pgsql.db_instance_password
@@ -98,7 +98,7 @@ module "awssm-db-password" {
 
 # Write the DB end point URL in SSM
 module "ssmw-db-endpoint" {
-  source = "./modules/ssmw"
+  source = "../modules/ssmw"
 
   parameter_name        = "db_endpoint_url"
   parameter_path        = "/${var.org_name}/database"
