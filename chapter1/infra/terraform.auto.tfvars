@@ -33,5 +33,5 @@ db_maximum_storage      = 100
 /********** EKS Module ***************/
 
 eks_version    = "1.24"
-instance_types = ["t3.medium", "t3.small"]
+instance_types = ["t3.large"]
 domain         = "s4cp.rohitsalecha.com"

@@ -3,6 +3,10 @@ data "aws_caller_identity" "current" {}
 # Fetch Current Region
 data "aws_region" "current" {}
 
+locals {
+  allowed_ecr = "${data.aws_caller_identity.current.id}.dkr.ecr.${data.aws_region.current.id}.amazonaws.com/*"
+}
+
 # Create Kyverno Namespace
 resource "kubernetes_namespace_v1" "kyverno" {
   metadata {
@@ -25,7 +29,6 @@ resource "helm_release" "kyverno" {
     for_each = {
       # For Dev replicacount is 1 for Prod environments with multi-node clusters it should be 3        
       "replicaCount"         = 1
-      "metricsConfig.create" = false
     }
     content {
       name  = set.key
@@ -63,11 +66,11 @@ spec:
           namespaces:
           - "${var.namespace}"
     validate:
-      message: "Pods can only use images from the AWS ECR registry"
+      message: "Pods can only use images from the AWS ECR registry ${local.allowed_ecr}"
       pattern:
         spec:
           containers:
-          - image: "${data.aws_caller_identity.current.id}.dkr.ecr.${data.aws_region.current.id}.amazonaws.com/*"
+          - image: "${local.allowed_ecr}"
 YAML
 
   depends_on = [

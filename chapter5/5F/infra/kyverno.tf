@@ -1,6 +1,6 @@
 # Module install kyverno and applies image restriction policy
 module "kyverno" {
-  source = "../../modules/kyverno"
+  source = "../modules/kyverno"
 
   namespace = kubernetes_namespace_v1.app.metadata.0.name
   #https://github.com/kyverno/kyverno/blob/main/charts/kyverno/Chart.yaml  
