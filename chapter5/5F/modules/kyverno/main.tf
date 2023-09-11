@@ -24,6 +24,7 @@ resource "helm_release" "kyverno" {
   repository      = "https://kyverno.github.io/kyverno/"
   namespace       = kubernetes_namespace_v1.kyverno.metadata.0.name
   cleanup_on_fail = true
+  version         = var.kyverno_helm_version
 
   dynamic "set" {
     for_each = {
