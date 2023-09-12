@@ -21,13 +21,13 @@ locals {
       module.prod.assume_dev_role_arn,
       module.dev.assume_admin_role_with_mfa_arn,
       module.prod.assume_k8s_developer_role_with_mfa_arn,
-      module.dev.assume_k8s_admin_role_with_mfa_arn      
+      module.dev.assume_k8s_admin_role_with_mfa_arn
     ],
     admin = [
       module.prod.assume_admin_role_with_mfa_arn,
       module.dev.assume_admin_role_with_mfa_arn,
       module.prod.assume_k8s_admin_role_with_mfa_arn,
-      module.dev.assume_k8s_admin_role_with_mfa_arn         
+      module.dev.assume_k8s_admin_role_with_mfa_arn
     ]
   }
 }
@@ -77,6 +77,6 @@ module "terraform_sa_aws_keys" {
     aws = aws.identity
   }
 
- depends_on = [ module.terraform_sa ]
+  depends_on = [module.terraform_sa]
 
 }

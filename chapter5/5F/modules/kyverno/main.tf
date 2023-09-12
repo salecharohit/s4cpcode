@@ -29,7 +29,7 @@ resource "helm_release" "kyverno" {
   dynamic "set" {
     for_each = {
       # For Dev replicacount is 1 for Prod environments with multi-node clusters it should be 3        
-      "replicaCount"         = 1
+      "replicaCount" = 1
     }
     content {
       name  = set.key

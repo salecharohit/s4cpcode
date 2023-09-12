@@ -23,15 +23,15 @@ output "assume_dev_role_name" {
 }
 
 output "s3_bucket_arn" {
-  value       = module.tf_state.s3_bucket_arn
+  value = module.tf_state.s3_bucket_arn
 }
 
 output "s3_bucket_name" {
-  value       = module.tf_state.s3_bucket_name
+  value = module.tf_state.s3_bucket_name
 }
 
 output "dynamodb_table_name" {
-  value       = module.tf_state.dynamodb_table_name
+  value = module.tf_state.dynamodb_table_name
 }
 
 output "name_servers" {

@@ -1,3 +1,11 @@
+## Chapter 5I
+
+- Installing Network Security Policy
+
+## Chapter 5G
+
+- Installing Calico
+
 ## Chapter 5F
 
 - Installing Kyverno

@@ -68,8 +68,8 @@ data "aws_iam_policy_document" "secrets_policy" {
 }
 
 resource "aws_iam_policy" "secrets_policy" {
-  name = "secrets_policy"
-  path = "/"
+  name   = "secrets_policy"
+  path   = "/"
   policy = data.aws_iam_policy_document.secrets_policy.json
 }
 
