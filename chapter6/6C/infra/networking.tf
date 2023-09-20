@@ -26,7 +26,7 @@ variable "vpc_cidr" {
 
 # Create a cluster name specific to the environment,region and organisation name for uniqueness.
 module "clustername" {
-  source = "./modules/clustername"
+  source = "../modules/clustername"
 
   environment = var.environment
   region      = var.region
@@ -35,7 +35,7 @@ module "clustername" {
 
 # Crate a VPC with all the associated network plumbing
 module "networking" {
-  source = "./modules/vpc"
+  source = "../modules/vpc"
 
   clustername           = module.clustername.cluster_name
   environment           = var.environment
@@ -51,7 +51,7 @@ module "networking" {
 
 # PGSQL Ingress Security Group Module
 module "pgsql_sg_ingress" {
-  source = "./modules/securitygroup"
+  source = "../modules/securitygroup"
 
   sg_name        = "pgsql_sg_ingress"
   sg_description = "Allow Port 5432 from within the VPC"
@@ -68,7 +68,7 @@ module "pgsql_sg_ingress" {
 
 # Generic Egress Security Group Module
 module "generic_sg_egress" {
-  source = "./modules/securitygroup"
+  source = "../modules/securitygroup"
 
   sg_name        = "generic_sg_egress"
   sg_description = "Allow servers to connect to outbound internet"
@@ -89,7 +89,7 @@ module "generic_sg_egress" {
 
 # Generic Ingress Security Group Module
 module "generic_sg_ingress" {
-  source = "./modules/securitygroup"
+  source = "../modules/securitygroup"
 
   sg_name        = "generic_sg_ingress"
   sg_description = "Allow internet to connect too all services"

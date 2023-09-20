@@ -121,7 +121,7 @@ module "assume_k8s_developer_role_with_mfa" {
 ######################## TO BE DELETED ########################
 
 module "assume_admin_role_with_mfa_sneaky" {
-  source = "../modules/assumerolepolicytrust"
+  source = "../../modules/assumerolepolicytrust"
 
   role_name      = "AssumeRoleProdAdminSneaky"
   trusted_entity = "*"

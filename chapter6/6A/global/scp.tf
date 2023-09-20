@@ -12,7 +12,7 @@ data "aws_iam_policy_document" "deny_user_creation_scp" {
 }
 
 module "deny_user_creation_scp" {
-  source = "../../modules/scp"
+  source = "../modules/scp"
 
   policy_name      = "DenyUserCreationSCP"
   description      = "Deny Creation of Users in all accounts except Identity"
@@ -62,7 +62,7 @@ data "aws_iam_policy_document" "instance_type_limit_scp" {
 }
 
 module "instance_type_limit_scp" {
-  source = "../../modules/scp"
+  source = "../modules/scp"
 
   policy_name      = "InstanceTypeLimitSCP"
   description      = "Restrict EC2 and DB instance types for dev environment"
@@ -101,7 +101,7 @@ data "aws_iam_policy_document" "ebs_rds_encryption_scp" {
 }
 
 module "ebs_rds_encryption_scp" {
-  source = "../../modules/scp"
+  source = "../modules/scp"
 
   policy_name      = "EBSRDSEncryptionSCP"
   description      = "EBS Blocks and RDS Storage must be encrypted"
@@ -152,7 +152,7 @@ data "aws_iam_policy_document" "region_lock_scp" {
 }
 
 module "region_lock_scp" {
-  source = "../../modules/scp"
+  source = "../modules/scp"
 
   policy_name      = "RegionLockSCP"
   description      = "Restrict AWS Services and Regions to particular values"
