@@ -34,4 +34,4 @@ db_maximum_storage      = 100
 
 eks_version    = "1.24"
 instance_types = ["t3.large"]
-domain         = "s4cp.rohitsalecha.com"
+domain         = "userX.s4cp.rohitsalecha.com"
