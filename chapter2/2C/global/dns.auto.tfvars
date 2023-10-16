@@ -1,1 +1,1 @@
-domain = "your.preconfigured.domain" //@CHANGEME
+domain = "userX.s4cp.rohitsalecha.com" // @TEMPLATE

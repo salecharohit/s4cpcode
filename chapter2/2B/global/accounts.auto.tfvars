@@ -1,15 +1,15 @@
-#@CHANGEME
+# @TEMPLATE
 accounts = {
   dev = {
     name  = "dev"
-    email = "email+dev@somedomain.com"
+    email = "i+dev.UserX@rohitsalecha.com"
   },
   identity = {
     name  = "identity"
-    email = "email+identity@somedomain.com"
+    email = "i+identity.UserX@rohitsalecha.com"
   },
   prod = {
     name  = "prod"
-    email = "email+prod@somedomain.com"
+    email = "i+prod.UserX@rohitsalecha.com"
   }
 }
