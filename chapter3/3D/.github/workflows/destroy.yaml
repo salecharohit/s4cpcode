@@ -34,5 +34,5 @@ jobs:
         id: validate
         run: terraform validate -no-color
             
-      - name: Terraform Destory
+      - name: Terraform Destroy
         run: terraform destroy --auto-approve -var-file=${{env.ENVIRONMENT}}.tfvars

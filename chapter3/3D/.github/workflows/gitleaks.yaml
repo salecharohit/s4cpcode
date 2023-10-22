@@ -1,4 +1,4 @@
-name: s4cp.gitsecrets
+name: s4cp.gitleaks
 
 on:
   workflow_dispatch:
