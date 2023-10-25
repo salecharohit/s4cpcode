@@ -31,15 +31,16 @@ output "links" {
   }
 }
 
-# Spool out temporary passwords of users created.
+# Spool out temporary passwords and access keys of users created.
 output "users" {
   value = {
     for user in var.users :
     user.username => {
-      temp_password      = module.users[user.username].temp_password
-      role_arns_assigned = local.user_role_mapping[user.role]
+      temp_password         = module.users[user.username].temp_password
+      role_arns_assigned    = local.user_role_mapping[user.role]
+      aws_access_key_id     = module.users_access_keys[user.username].aws_access_key_id
+      aws_access_key_secret = module.users_access_keys[user.username].aws_access_key_secret
     }
-
   }
 }
 

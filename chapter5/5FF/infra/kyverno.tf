@@ -11,7 +11,7 @@ module "kyverno" {
 
 resource "kubernetes_deployment_v1" "kyverno_test" {
   metadata {
-    name = "kyverno-test"
+    name      = "kyverno-test"
     namespace = kubernetes_namespace_v1.app.metadata.0.name
     labels = {
       test = "kyverno"
