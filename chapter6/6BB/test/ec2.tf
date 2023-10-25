@@ -35,4 +35,16 @@ resource "aws_instance" "dummy_opa_1" {
 
 }
 
+resource "aws_instance" "dummy_opa_2" {
+  ami           = "ami-01e436b65d641478d"
+  instance_type = "t3.micro"
+
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_tokens                 = "optional"
+    http_put_response_hop_limit = 2
+    instance_metadata_tags      = "disabled"
+  }
+
+}
 
