@@ -64,4 +64,4 @@ hosts.*
 **.settings
 app/.classpath.xml
 app/.project.xml
-notes.txt
+notes.md
