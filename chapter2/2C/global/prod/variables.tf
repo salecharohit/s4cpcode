@@ -3,9 +3,10 @@ variable "account" {
   type        = string
 }
 
+# https://github.com/hashicorp/terraform-provider-aws/issues/15310 Leading Account with a Zero creates problems
 variable "identity_account_id" {
   description = "AWS Organisation Account ID of the Identity Account"
-  type        = number
+  type        = string
 }
 
 variable "domain" {
