@@ -26,7 +26,7 @@ terraform {
 module "tf_state_admin" {
   source = "../modules/tf_state"
 
-  account = "admin"
+  account = "global"
 }
 
 output "s3_bucket_arn" {
