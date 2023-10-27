@@ -68,37 +68,10 @@ data "aws_iam_policy_document" "self_manage" {
     ]
   }
 
-  # statement {
-  #   sid       = "AllowManageOwnAccessKeys"
-  #   effect    = "Allow"
-  #   resources = ["arn:aws:iam::*:user/$${aws:username}"]
-
-  #   actions = [
-  #     "iam:CreateAccessKey",
-  #     "iam:DeleteAccessKey",
-  #     "iam:ListAccessKeys",
-  #     "iam:UpdateAccessKey",
-  #   ]
-  # }
-
-  # statement {
-  #   sid       = "AllowManageOwnSSHPublicKeys"
-  #   effect    = "Allow"
-  #   resources = ["arn:aws:iam::*:user/$${aws:username}"]
-
-  #   actions = [
-  #     "iam:DeleteSSHPublicKey",
-  #     "iam:GetSSHPublicKey",
-  #     "iam:ListSSHPublicKeys",
-  #     "iam:UpdateSSHPublicKey",
-  #     "iam:UploadSSHPublicKey",
-  #   ]
-  # }
-
   statement {
     sid       = "AllowManageOwnVirtualMFADevice"
     effect    = "Allow"
-    resources = ["arn:aws:iam::*:mfa/$${aws:username}"]
+    resources = ["arn:aws:iam::*:mfa/*"]
 
     actions = [
       "iam:CreateVirtualMFADevice",
@@ -115,34 +88,34 @@ data "aws_iam_policy_document" "self_manage" {
       "iam:DeactivateMFADevice",
       "iam:EnableMFADevice",
       "iam:ListMFADevices",
-      "iam:ResyncMFADevice",
+      "iam:ResyncMFADevice"
     ]
   }
 
   # Deny all actions EXCEPT the given below if user has not configured MFA
-  # statement {
-  #   sid       = "DenyAllExceptListedIfNoMFA"
-  #   effect    = "Deny"
-  #   resources = ["*"]
+  statement {
+    sid       = "DenyAllExceptListedIfNoMFA"
+    effect    = "Deny"
+    resources = ["*"]
 
-  #   not_actions = [
-  #     "iam:CreateVirtualMFADevice",
-  #     "iam:EnableMFADevice",
-  #     "iam:GetUser",
-  #     "iam:ListMFADevices",
-  #     "iam:ListVirtualMFADevices",
-  #     "iam:ResyncMFADevice",
-  #     "sts:GetSessionToken",
-  #     "iam:ChangePassword",
-  #     "iam:GetUser",
-  #   ]
+    not_actions = [
+      "iam:CreateVirtualMFADevice",
+      "iam:EnableMFADevice",
+      "iam:GetUser",
+      "iam:ListMFADevices",
+      "iam:ListVirtualMFADevices",
+      "iam:ResyncMFADevice",
+      "sts:GetSessionToken",
+      "iam:ChangePassword",
+      "iam:GetUser",
+    ]
 
-  #   condition {
-  #     test     = "BoolIfExists"
-  #     variable = "aws:MultiFactorAuthPresent"
-  #     values   = ["false"]
-  #   }
-  # }
+    condition {
+      test     = "BoolIfExists"
+      variable = "aws:MultiFactorAuthPresent"
+      values   = ["false"]
+    }
+  }
 }
 
 # Create an Self Manage Policy

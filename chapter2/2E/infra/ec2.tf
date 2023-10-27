@@ -22,3 +22,7 @@ resource "aws_instance" "dummy" {
     env = "${var.environment}"
   }
 }
+
+output "server_ip" {
+  value = aws_instance.dummy.public_ip
+}
