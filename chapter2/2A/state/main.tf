@@ -29,11 +29,6 @@ module "tf_state_admin" {
   account = "global"
 }
 
-output "s3_bucket_arn" {
-  value       = module.tf_state_admin.s3_bucket_arn
-  description = "The ARN of the S3 bucket"
-}
-
 output "s3_bucket_name" {
   value       = module.tf_state_admin.s3_bucket_name
   description = "The Name of the S3 bucket"
