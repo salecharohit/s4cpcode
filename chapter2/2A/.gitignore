@@ -65,3 +65,4 @@ hosts.*
 app/.classpath.xml
 app/.project.xml
 notes.md
+**/test/*
