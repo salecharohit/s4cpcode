@@ -7,7 +7,7 @@ resource "random_id" "table_id" {
 }
 
 resource "aws_s3_bucket" "terraform_state_bucket" {
-  bucket = "s4cp-terraform-s3-state-${var.account}-${random_id.bucket_id.hex}"
+  bucket = "s3-bucket-${var.account}-${random_id.bucket_id.hex}"
   tags = {
     Name              = "Terraform State Bucket"
     terraform-managed = "true"
@@ -46,7 +46,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state_b
 }
 
 resource "aws_dynamodb_table" "terraform_state_lock" {
-  name         = "s4cp_terraform_dynamo_${var.account}_${random_id.table_id.hex}"
+  name         = "dynamodb-${var.account}-${random_id.table_id.hex}"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 
