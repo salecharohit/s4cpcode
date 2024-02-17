@@ -1,1 +1,1 @@
-domain = "userX.s4cp.rohitsalecha.com" // @TEMPLATE
+domain = "userX.domainX" // @TEMPLATE

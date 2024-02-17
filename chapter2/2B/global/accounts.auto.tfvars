@@ -2,14 +2,14 @@
 accounts = {
   dev = {
     name  = "dev"
-    email = "i+dev.UserX@rohitsalecha.com"
+    email = "s4cpaws+userX.dev@gmail.com"
   },
   identity = {
     name  = "identity"
-    email = "i+identity.UserX@rohitsalecha.com"
+    email = "s4cpaws+userX.identity@gmail.com"
   },
   prod = {
     name  = "prod"
-    email = "i+prod.UserX@rohitsalecha.com"
+    email = "s4cpaws+userX.prod@gmail.com"
   }
 }
