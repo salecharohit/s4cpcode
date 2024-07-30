@@ -11,7 +11,7 @@ module "github-oidc" {
 
   create_oidc_provider = true
   create_oidc_role     = true
-
+  role_name            = "GithubOIDCGlobalAdmin"
   repositories              = ["${var.github_account_repo}"]
   oidc_role_attach_policies = ["arn:aws:iam::aws:policy/AdministratorAccess"]
 }

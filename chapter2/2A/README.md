@@ -1,6 +1,11 @@
+# S4CP 
+
+This Project is part of the S4CP Training accessible at (https://rohitsalecha.com/s4cp/)[https://rohitsalecha.com/s4cp/]
+
 ## Chapter 2A
 
 - Terraform State Storage Creation
+- Github OIDC Integration
 
 ## Chapter 1
 

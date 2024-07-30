@@ -1,15 +1,14 @@
-# @TEMPLATE
 accounts = {
   dev = {
     name  = "dev"
-    email = "s4cpbhusa+userX.dev@gmail.com"
+    email = "email+alias.dev@gmail.com" #@CHANGEME
   },
   identity = {
     name  = "identity"
-    email = "s4cpbhusa+userX.identity@gmail.com"
+    email = "email+alias.identity@gmail.com" #@CHANGEME
   },
   prod = {
     name  = "prod"
-    email = "s4cpbhusa+userX.prod@gmail.com"
+    email = "email+alias.prod@gmail.com" #@CHANGEME
   }
 }
