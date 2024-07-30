@@ -7,7 +7,7 @@ variable "accounts" {
 
 variable "region" {
   description = "Region of Deployment"
-  default     = "us-east-2"
+  default     = "us-west-2"
 }
 
 variable "org_name" {

@@ -15,18 +15,24 @@ on:
       - "!**/README.md"
   workflow_dispatch:
 
-env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.ADMIN_AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.ADMIN_AWS_SECRET_ACCESS_KEY }}
-
 jobs:
   terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read    
     defaults:
       run:
         working-directory: "global"
     steps:
+      - uses: actions/checkout@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_OIDC_GLOBAL_ADMIN }}
+          aws-region: us-west-2
+
       - name: Checkout
         uses: actions/checkout@v3
 
