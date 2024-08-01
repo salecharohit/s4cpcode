@@ -1,6 +1,6 @@
 variable "github_account_repo" {
   description = "Github Account and Repository that will be interacting with AWS OIDC"
-  default       = "salecharohit/playground" #@CHANGEME
+  default       = "<username>/playground" #@CHANGEME
   type        = string
 }
 

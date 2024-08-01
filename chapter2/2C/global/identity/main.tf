@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 # Create a Password Policy in the Identity Account as users will be created in this account only
 resource "aws_iam_account_password_policy" "strict" {
   minimum_password_length        = 10
@@ -26,22 +28,16 @@ resource "aws_iam_policy" "iam_admin" {
 
 }
 
-# Create an IAM Administrator Group
-resource "aws_iam_group" "iam_admin" {
-  name = "IAMAdministrator"
+# Create an Admin Role with Administrator Access Policy with MFA
+module "assume_iam_admin_role_with_mfa" {
+  source = "../../modules/assumerolepolicytrust"
+
+  role_name      = "AssumeRoleIAMAdminWithMFA"
+  trusted_entity = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+  policy_arn     = [aws_iam_policy.iam_admin.arn]
+  account        = "identity"
 
 }
-
-# Attach the IAM Administrator Policy with IAMAdministrator Group
-resource "aws_iam_group_policy_attachment" "iam_admin" {
-  group      = aws_iam_group.iam_admin.name
-  policy_arn = aws_iam_policy.iam_admin.arn
-
-}
-
-# $${aws:username} additonal $ is for the below error
-# Template interpolation doesn't expect a colon at this location. Did you intend this to be a literal sequence to be #processed as part of another language?
-# If so, you can escape it by starting with "$${" instead of just "${"
 
 # Define a Self Manage Policy
 data "aws_iam_policy_document" "self_manage" {

@@ -1,6 +1,5 @@
-bucket         = "your-unique-bucket-name-prod-account" //@CHANGEME
-dynamodb_table = "your-lock-table-name-prod-account"    //@CHANGEME
-role_arn       = "arn:aws:iam::<prod-account-id>:role/AssumeRoleAdminWithoutMFAprod" //@CHANGEME
+bucket         = "your-global-bucket-name" //@CHANGEME
+dynamodb_table = "your-global-lock-table-name"    //@CHANGEME
 key            = "prod/terraform.tfstate"
-region         = "us-east-2"
+region         = "us-west-2"
 encrypt        = true
