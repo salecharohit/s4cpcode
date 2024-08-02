@@ -29,7 +29,7 @@ jobs:
         working-directory: "infra"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -83,7 +83,7 @@ jobs:
         continue-on-error: true
 
       - name: Terraform Plan Output
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         if: github.event_name == 'pull_request'
         env:
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
@@ -118,7 +118,7 @@ jobs:
           run: opa eval --input ${{ github.workspace }}/tfplan.json --data scripts/opa/policies.rego -f pretty 'data.aws'
 
       - name: OPA Scan Output
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         if: github.event_name == 'pull_request'
         env:
           OPACHECK: ${{ steps.opa.outputs.stdout }}

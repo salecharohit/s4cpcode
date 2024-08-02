@@ -20,9 +20,13 @@ jobs:
   depcheck:
     name: Software Composition Analysis Scan
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write      
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -64,7 +68,7 @@ jobs:
           run: python3 scripts/sca/dependency_parser.py dependency-check-report.html
 
       - name: Depdency-Check Scan Output
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         if: github.event_name == 'pull_request'
         env:
           DEPCHECK: ${{ steps.depcheck_summary.outputs.stdout }}

@@ -19,10 +19,13 @@ jobs:
   semgrep:
     name: Semgrep Scan
     runs-on: ubuntu-latest
-
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write  
     steps:
       - name: Clone Application
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -41,7 +44,7 @@ jobs:
           run: semgrep scan --config=tools/semgrep --config=auto --include=app
 
       - name: Semgrep Scan Output
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         if: github.event_name == 'pull_request'
         env:
           SEMGREP: ${{ steps.semgrep.outputs.stdout }}

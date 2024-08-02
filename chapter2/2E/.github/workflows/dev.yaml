@@ -21,7 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
-      contents: read    
+      contents: write
+      pull-requests: write   
     defaults:
       run:
         working-directory: "infra"
@@ -53,7 +54,7 @@ jobs:
         continue-on-error: true
 
       - name: Terraform Plan Output
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         if: github.event_name == 'pull_request'
         env:
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"

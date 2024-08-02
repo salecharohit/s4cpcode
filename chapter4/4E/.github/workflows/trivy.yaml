@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
@@ -66,7 +66,7 @@ jobs:
         run: cat summary.txt
 
     - name: Trivy Scan Output
-      uses: actions/github-script@v6
+      uses: actions/github-script@v7
       if: github.event_name == 'pull_request'
       env:
         TRIVY_SCAN_SUMMARY: ${{ steps.trivy_summary_output.outputs.stdout }}
