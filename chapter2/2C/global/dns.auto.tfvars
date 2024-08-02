@@ -1,1 +1,1 @@
-domain = "userX.domainX" // @TEMPLATE
+domain = "userX.domainX" // @CHANGEME

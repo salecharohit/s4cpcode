@@ -14,7 +14,7 @@ output "links" {
     switch_role_dev_admin             = "https://signin.aws.amazon.com/switchrole?account=${module.dev_account.id}&roleName=${urlencode(module.dev.assume_admin_role_with_mfa_name)}&displayName=${urlencode("Admin@Dev")}"
     switch_role_identity_admin        = "https://signin.aws.amazon.com/switchrole?account=${module.identity_account.id}&roleName=${urlencode(module.identity.iam_admin_role_name)}&displayName=${urlencode("Admin@Identity")}"
     switch_role_prod_admin            = "https://signin.aws.amazon.com/switchrole?account=${module.prod_account.id}&roleName=${urlencode(module.prod.assume_admin_role_with_mfa_name)}&displayName=${urlencode("Admin@Prod")}"
-    switch_role_prod_dev              = "https://signin.aws.amazon.com/switchrole?account=${module.prod_account.id}&roleName=${urlencode(module.dev.assume_admin_role_with_mfa_name)}&displayName=${urlencode("Admin@Prod")}"
+    switch_role_prod_readonly         = "https://signin.aws.amazon.com/switchrole?account=${module.prod_account.id}&roleName=${urlencode(module.prod.assume_readonly_role_name)}&displayName=${urlencode("ReadOnly@Prod")}"
   }
 }
 

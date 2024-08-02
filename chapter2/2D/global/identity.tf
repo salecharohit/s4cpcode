@@ -18,7 +18,7 @@ module "users" {
 locals {
   user_role_mapping = {
     developer = [
-      module.prod.assume_dev_role_arn,
+      module.prod.assume_readonly_role_arn,
       module.dev.assume_admin_role_with_mfa_arn
     ],
     admin = [
