@@ -103,7 +103,7 @@ jobs:
         output: trivy-report.html
 
     - name: Save Trivy Full Scan Report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       with:
         name: trivy-report.html
