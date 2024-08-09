@@ -16,14 +16,16 @@ on:
   workflow_dispatch:
 
 env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.TERRAFORM_AWS_SECRET_ACCESS_KEY }}
   GIT_ACTOR: "@${{ github.actor }}"  
 
 jobs:
   terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write   
     defaults:
       run:
         working-directory: "infra"
@@ -32,6 +34,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_OIDC_GLOBAL_ADMIN }}
+          aws-region: us-west-2
 
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
@@ -50,9 +58,9 @@ jobs:
         run: python3 -m pip install awscli
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.1.0
+          terraform_version: 1.2.0
 
       - name: Terraform Init
         id: init

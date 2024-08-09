@@ -23,7 +23,7 @@ database_subnets_cidr = [
 
 db_engine = "postgres"
 # aws rds describe-db-engine-versions --engine aurora-postgresql --query '*[].[EngineVersion]' --output text --region us-east-2
-db_engine_version       = "14.3"
+db_engine_version       = "14.10"
 db_major_engine_version = "14"
 db_instance_class       = "db.t4g.small"
 db_engine_family        = "postgres14"

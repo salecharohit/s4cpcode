@@ -28,9 +28,3 @@ variable "users" {
   type        = map(map(string))
 }
 
-variable "terraform_sa_username" {
-  description = "Username for Service Account used by Terraform"
-  type        = string
-  default     = "terraform"
-}
-
