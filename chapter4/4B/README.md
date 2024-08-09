@@ -1,10 +1,15 @@
+# S4CP 
+
+This Project is part of the S4CP Training accessible at [https://rohitsalecha.com/s4cp/](https://rohitsalecha.com/s4cp/)
+
 ## Chapter 4B
 
-- Create ECR repository
+- Docker Image Build and Push GHA (docker-prod.yaml,docker-dev.yaml)
 
 ## Chapter 4A
 
-- Create IAM Role for Github
+- Create IAM Role for Github OIDC
+- Create ECR Registry
 
 ## Chapter 3D
 

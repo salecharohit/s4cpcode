@@ -1,29 +1,39 @@
-name: s4cp.docker
+name: s4cp.docker.dev
 
 on:
   push:
     branches:
-        - main
+        - dev
     paths:
       - "app/**"
       - "!**/README.md"
   workflow_dispatch:   
 
 env:
-  AWS_REGION: "us-east-2"
+  AWS_REGION: "us-east-1"
   SERVICE: "app"
-  ENV: "prod"
+  ENV: "dev"
   GIT_ACTOR: "@${{ github.actor }}"
 
 jobs:
   BuildAndPushImageToECR:
     name: "Build and Push to ECR"
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_OIDC_DEV_ECR }}
+          aws-region: us-west-2
+          role-skip-session-tagging: true
+          mask-aws-account-id: false          
 
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
@@ -34,23 +44,11 @@ jobs:
 
       - name: Set short git commit SHA
         id: shortsha
-        run: echo "short_sha=`echo ${GITHUB_SHA} | cut -c1-6`" >> $GITHUB_OUTPUT
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.TERRAFORM_AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME_PROD_ECR }}
-          role-duration-seconds: 1200
-          role-session-name: GithubBuildAndPushImageToECR
-          role-skip-session-tagging: true
-          mask-aws-account-id: false           
+        run: echo "short_sha=`echo ${GITHUB_SHA} | cut -c1-6`" >> $GITHUB_OUTPUT        
 
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-image

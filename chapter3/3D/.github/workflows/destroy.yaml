@@ -4,8 +4,6 @@ on:
   workflow_dispatch:
 
 env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.TERRAFORM_AWS_SECRET_ACCESS_KEY }}
   ENVIRONMENT: "prod"
 
 jobs:
@@ -20,6 +18,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_OIDC_GLOBAL_ADMIN }}
+          aws-region: us-west-2
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
