@@ -1,3 +1,7 @@
+# S4CP 
+
+This Project is part of the S4CP Training accessible at [https://rohitsalecha.com/s4cp/](https://rohitsalecha.com/s4cp/)
+
 ## Chapter 5C
 
 - Implementing EKS RBAC
@@ -10,25 +14,22 @@
 
 - Setting Up Prod K8s
 
-## Chapter 4E
+## Chapter 4D
 
 - Trivy Integration
 
-## Chapter 4D
+## Chapter 4C
 
 - Semgrep Rules for Scanning Dockerfiles
 
-## Chapter 4C
-
-- Docker Image Build and Push GHA (docker.yaml)
-
 ## Chapter 4B
 
-- Create ECR repository
+- Docker Image Build and Push GHA (docker-prod.yaml,docker-dev.yaml)
 
 ## Chapter 4A
 
-- Create SA for Github
+- Create IAM Role for Github OIDC
+- Create ECR Registry
 
 ## Chapter 3D
 
@@ -55,31 +56,26 @@
 - Rule for Command Injection
 - Rule for SQL Injection
 
+## Chapter 2E
+
+- AWS Multi-Account CI/CD Flow
+
 ## Chapter 2D
 
-- Configuring AWS CLI Profiles
-- Accessing Security Account
-- Accessing Dev by Assuming IAM Role
-- Accessing Prod by Assuming IAM Role
-- Prepare the Terraform Dev and Prod workspaces
-- Execute a dummy EC2 in dev/prod environments
+- Creating AWS IAM Users
 
 ## Chapter 2C
 
-- Create IAM Users
-- Generate GNUPG Keys
+- Creating AWS IAM Roles and Groups
 
 ## Chapter 2B
 
-- Create IAM Roles
-- Create IAM Groups
+- Activating AWS Organisations
+- Creating AWS Accounts and OUs
 
 ## Chapter 2A
 
-- Spin up an AWS Organisation Root Account
-- Setup Security,Dev and Prod OUs
-- Configure the AWS Provider
-- Create GitHub Action for Security Account (security.yaml)
+- Terraform State Storage Creation
 
 ## Chapter 1
 

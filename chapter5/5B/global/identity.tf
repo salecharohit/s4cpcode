@@ -7,7 +7,7 @@ module "users" {
 
   user_name = var.users[each.key].username
 
-  groups = var.users[each.key].role == "admin" ? [module.identity.group_iam_admin] : [module.identity.group_self_manage]
+  groups = [module.identity.group_self_manage]
 
   providers = {
     aws = aws.identity
@@ -18,16 +18,17 @@ module "users" {
 locals {
   user_role_mapping = {
     developer = [
-      module.prod.assume_dev_role_arn,
+      module.prod.assume_readonly_role_arn,
       module.dev.assume_admin_role_with_mfa_arn,
       module.prod.assume_k8s_developer_role_with_mfa_arn,
-      module.dev.assume_k8s_admin_role_with_mfa_arn
+      module.dev.assume_k8s_admin_role_with_mfa_arn      
     ],
     admin = [
       module.prod.assume_admin_role_with_mfa_arn,
       module.dev.assume_admin_role_with_mfa_arn,
+      module.identity.iam_admin_role_arn,
       module.prod.assume_k8s_admin_role_with_mfa_arn,
-      module.dev.assume_k8s_admin_role_with_mfa_arn
+      module.dev.assume_k8s_admin_role_with_mfa_arn      
     ]
   }
 }
@@ -46,20 +47,4 @@ module "user_role_mapping_with_mfa" {
   }
 
   depends_on = [module.users]
-}
-
-module "terraform_sa" {
-  source = "../modules/serviceaccount"
-
-  username = var.terraform_sa_username
-
-  roles = [module.prod.assume_admin_role_without_mfa_arn,
-    module.dev.assume_admin_role_without_mfa_arn,
-    module.prod.assume_ecr_role_without_mfa_arn,
-    module.dev.assume_ecr_role_without_mfa_arn
-  ]
-
-  providers = {
-    aws = aws.identity
-  }
 }

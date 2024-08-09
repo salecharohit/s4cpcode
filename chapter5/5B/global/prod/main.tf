@@ -1,14 +1,3 @@
-# Create an IAM Role and attach the EKSRead Only Policy for Developers Group
-module "assume_dev_role" {
-  source = "../../modules/assumerolepolicytrust"
-
-  role_name      = "AssumeRoleDeveloperWithMFA${var.account}"
-  trusted_entity = "arn:aws:iam::${var.identity_account_id}:root"
-  policy_arn     = ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
-  account        = var.account
-
-}
-
 # Create an Admin Role with Administrator Access Policy with MFA
 module "assume_admin_role_with_mfa" {
   source = "../../modules/assumerolepolicytrust"
@@ -20,23 +9,15 @@ module "assume_admin_role_with_mfa" {
 
 }
 
-# Create an Admin Role with Administrator Access Policy without MFA
-module "assume_admin_role_without_mfa" {
+# Create an IAM Role and attach the EKSRead Only Policy for Developers Group
+module "assume_readonly_role" {
   source = "../../modules/assumerolepolicytrust"
 
-  role_name      = "AssumeRoleAdminWithoutMFA${var.account}"
+  role_name      = "AssumeReadOnlyrWithMFA${var.account}"
   trusted_entity = "arn:aws:iam::${var.identity_account_id}:root"
-  policy_arn     = ["arn:aws:iam::aws:policy/AdministratorAccess"]
+  policy_arn     = ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
   account        = var.account
-  mfa_needed     = false
 
-}
-
-# Create Infrastructure to Store Terraform State
-module "tf_state" {
-  source = "../../modules/tf_state"
-
-  account = var.account
 }
 
 # Create a Hosted Zone with provided domain name
@@ -50,31 +31,28 @@ resource "aws_route53_zone" "default" {
   }
 }
 
-# IAM Role for Github Access
-module "assume_ecr_role_without_mfa" {
-  source = "../../modules/assumerolepolicytrust"
-
-  role_name      = "AssumeRoleECRWithoutMFA${var.account}"
-  trusted_entity = "arn:aws:iam::${var.identity_account_id}:root"
-  policy_arn     = ["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"]
-  account        = var.account
-  mfa_needed     = false
-
+resource "aws_ecr_repository" "default" {
+  name                 = "s4cpecr"
+  image_tag_mutability = "IMMUTABLE"
+  force_delete         = true
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+  tags = {
+    env               = "${var.account}"
+    terraform-managed = "true"
+  }
 }
 
-# Create ECR for respective environments
-module "create_ecr" {
-  source = "../../modules/ecr"
+module "github_oidc_ecr_role" {
+  source  = "github.com/terraform-module/terraform-aws-github-oidc-provider.git?ref=v2.2.0"
 
-  environment = var.account
-  ecr_name    = "s4cpecr"
-
-  depends_on = [
-    module.assume_ecr_role_without_mfa
-  ]
-
+  create_oidc_provider = true
+  create_oidc_role     = true
+  role_name            = "OIDCECRAdmin${var.account}"
+  repositories              = ["${var.github_account_repo}"]
+  oidc_role_attach_policies = ["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"]
 }
-
 
 data "aws_iam_policy_document" "k8s_access" {
   statement {
