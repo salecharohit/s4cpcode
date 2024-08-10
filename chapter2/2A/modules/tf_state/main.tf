@@ -8,6 +8,7 @@ resource "random_id" "table_id" {
 
 resource "aws_s3_bucket" "terraform_state_bucket" {
   bucket = "s3-bucket-${var.account}-${random_id.bucket_id.hex}"
+  force_destroy = true
   tags = {
     Name              = "Terraform State Bucket"
     terraform-managed = "true"
