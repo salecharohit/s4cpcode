@@ -1,1 +1,1 @@
-domain = "userX.domainX" // @CHANGEME
+domain = "domainX" // @CHANGEME
