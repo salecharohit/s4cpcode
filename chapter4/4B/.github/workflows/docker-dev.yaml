@@ -20,7 +20,9 @@ jobs:
     name: "Build and Push to ECR"
     runs-on: ubuntu-latest
     permissions:
-      id-token: write    
+      id-token: write
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
