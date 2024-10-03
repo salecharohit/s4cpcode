@@ -51,7 +51,7 @@ terraform {
 
 # Feeding the AWS providers with the data it needs
 locals {
-  assume_role_arn = "arn:aws:iam::${var.assume_role_account_id}:role/AssumeRoleAdminWithoutMFA${var.environment}"
+  assume_role_arn = "arn:aws:iam::${var.assume_role_account_id}:role/Administrator"
 }
 provider "aws" {
   access_key = "AKIAERKSDFASDFKASDMD"
